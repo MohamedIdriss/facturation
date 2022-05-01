@@ -1,0 +1,186 @@
+import 'package:flutter/material.dart';
+import 'package:projet_fin_etude/models/article.dart';
+import 'package:projet_fin_etude/providers/list_article_provider.dart';
+import 'package:provider/src/provider.dart';
+import 'package:uuid/uuid.dart';
+
+class Ajout_article extends StatefulWidget {
+
+  @override
+  Ajout_articleState createState() => Ajout_articleState();
+}
+
+class Ajout_articleState extends State<Ajout_article> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Article art = new Article();
+bool switchValue = true;
+  var uuid = Uuid();
+
+  @override
+  Widget build(BuildContext context) {
+    final provlistArticle = Provider.of<ListArticleProvider>(context,listen: false);
+art.id= uuid.v1() ;
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurpleAccent[700],
+        title: Text('Article'),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              if (_formKey.currentState!.validate()==true) {
+                _formKey.currentState!.save();
+
+                provlistArticle.addItem(art);
+
+                Navigator.pop(context);
+
+
+              }
+            },
+          )
+        ],
+      ),
+      body: Form(
+        key: _formKey,
+        child: Column(
+
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Container(child: widgetDescription(art)),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Container(child: widgetPrixUnitaire(art)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween
+                  ,children:[
+                Text('TVA'),
+                Switch(
+                  value: switchValue,
+                  onChanged: (value) {
+                    setState(() {
+                      switchValue = value;
+                      art.tva = switchValue;
+                    });
+
+                  },
+                ),
+
+              ]),
+            ),
+            Visibility(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                child: Container(child: widgetMontantTVA(art)),
+              ),
+              visible: switchValue,
+            ),
+
+            /* Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+        Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()==true) {
+                      _formKey.currentState!.save();
+                      Navigator.pop(context, art);
+
+
+                    }
+          },
+          child: const Text('Valider')))]),*/
+
+
+          ],),
+      ),
+    );
+  }
+}
+
+Widget widgetDescription(Article art){
+  return TextFormField(
+    maxLengthEnforced: false,
+    decoration: const InputDecoration(
+
+      hintText: 'Description',
+    ),
+    validator: (String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Description est requis';
+      }
+      else if (value.length>15) {
+        return 'Your text is too long !';
+      }
+      return null;
+    },
+    onSaved: (String? value){
+
+      art.description = value!;
+    },
+
+  );
+}
+Widget widgetPrixUnitaire(Article art){
+  return TextFormField(
+    decoration: const InputDecoration(
+
+      label: Text('Prix unitaire', style: TextStyle(color: Colors.black,
+      ),),
+
+      hintText: '0,00',
+    ),
+    textAlign: TextAlign.start,
+    keyboardType: TextInputType.number,
+
+    validator: (String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Prix est requis';
+      }
+
+      return null;
+    },
+    onSaved: (String? value){
+      art.prix = double.parse(value!);
+    },
+
+  );
+}
+Widget widgetMontantTVA(Article art){
+  return TextFormField(
+    decoration: const InputDecoration(
+
+      label: Text('Pourcentage TVA', style: TextStyle(color: Colors.black,
+      ),),
+
+      hintText: '0 %',
+    ),
+    textAlign: TextAlign.start,
+    keyboardType: TextInputType.number,
+
+    validator: (String? value) {
+      if (value == null || value.isEmpty) {
+        return 'TVA est requis';
+      }
+
+      return null;
+    },
+    onSaved: (String? value){
+      art.poucentageTva = double.parse(value!);
+    },
+
+  );
+}
