@@ -17,6 +17,9 @@ void initialRemiseProvider(){
   _montantFixe=0;
   _isVisible = false;
   _isVisible2 = false;
+
+  notifyListeners();
+
 }
 
 

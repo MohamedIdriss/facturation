@@ -66,7 +66,11 @@ art.id= uuid.v1() ;
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween
                   ,children:[
-                Text('TVA'),
+                Text('TVA',  style: TextStyle(
+
+                  fontFamily: 'DMSans',
+                  color: Colors.black,
+                ),),
                 Switch(
                   value: switchValue,
                   onChanged: (value) {
@@ -138,10 +142,13 @@ Widget widgetPrixUnitaire(Article art){
   return TextFormField(
     decoration: const InputDecoration(
 
-      label: Text('Prix unitaire', style: TextStyle(color: Colors.black,
+      label: Text('Prix unitaire', style: TextStyle(
+
+        fontFamily: 'DMSans',
+        color: Colors.black,
       ),),
 
-      hintText: '0,00',
+      hintText: '0.00',
     ),
     textAlign: TextAlign.start,
     keyboardType: TextInputType.number,
@@ -163,7 +170,10 @@ Widget widgetMontantTVA(Article art){
   return TextFormField(
     decoration: const InputDecoration(
 
-      label: Text('Pourcentage TVA', style: TextStyle(color: Colors.black,
+      label: Text('Pourcentage TVA', style: TextStyle(
+
+        fontFamily: 'DMSans',
+        color: Colors.black,
       ),),
 
       hintText: '0 %',

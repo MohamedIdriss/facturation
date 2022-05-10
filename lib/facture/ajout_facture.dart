@@ -1,43 +1,44 @@
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
-import 'package:projet_fin_etude/devis/signature_page.dart';
-import 'package:projet_fin_etude/devis/signature_preview_page.dart';
-import 'package:projet_fin_etude/devis/remise_page.dart';
-import 'package:projet_fin_etude/devis/select_client.dart';
-import 'package:projet_fin_etude/drawer_items/change_tva.dart';
-import 'package:projet_fin_etude/models/article.dart';
+
+import 'package:projet_fin_etude/facture/remise_page_facture.dart';
+import 'package:projet_fin_etude/facture/select_client_facture.dart';
+import 'package:projet_fin_etude/facture/signature_preview_page_facture.dart';
+
 import 'package:projet_fin_etude/models/client.dart';
-import 'package:projet_fin_etude/models/devis.dart';
-import 'package:projet_fin_etude/providers/devis_provider.dart';
-import 'package:projet_fin_etude/providers/list_article_provider.dart';
-import 'package:projet_fin_etude/providers/list_client_provider.dart';
-import 'package:projet_fin_etude/providers/list_devis_provider.dart';
-import 'package:projet_fin_etude/providers/tva_provider.dart';
+import 'package:projet_fin_etude/models/facture.dart';
+
+import 'package:projet_fin_etude/providers/facture_provider.dart';
+
+import 'package:projet_fin_etude/providers/list_facture_provider.dart';
+
 import 'package:provider/src/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import 'ajout_article_page_devis.dart';
-import 'modifier_article_page_devis.dart';
+import 'ajout_article_facture.dart';
+import 'modifier_article_page_facture.dart';
 
 
-class AjoutDevis extends StatelessWidget {
-  const AjoutDevis({Key? key}) : super(key: key);
+
+
+class AjoutFacture extends StatelessWidget {
+  const AjoutFacture({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Ajout_devis_state();
+    return Ajout_facture_state();
   }
 }
 
 
-class Ajout_devis_state extends StatefulWidget {
+class Ajout_facture_state extends StatefulWidget {
 
   @override
-  _Ajout_devis_stateState createState() => _Ajout_devis_stateState();
+  _Ajout_facture_stateState createState() => _Ajout_facture_stateState();
 }
 
-class _Ajout_devis_stateState extends State<Ajout_devis_state> {
+class _Ajout_facture_stateState extends State<Ajout_facture_state> {
   var numeroDevisText = RichText(
     text: TextSpan(
       style:  const TextStyle(
@@ -46,7 +47,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
         color: Colors.black,
       ),
       children: <TextSpan>[
-        new TextSpan(text: 'Numéro de Devis '),
+        new TextSpan(text: 'Numéro de Facture '),
         /* new TextSpan(
             text: '*',
             style:
@@ -57,24 +58,10 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
 
 
 
-  var validite = RichText(
-    text: const TextSpan(
-      style:  TextStyle(
-        fontSize: 17.0,
-        fontFamily: 'DMSans',
-        color: Colors.black,
-      ),
-      children: <TextSpan>[
-         TextSpan(text: 'Validité '),
-          TextSpan(
-            text: '*',
-            style:
-                 TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-      ],
-    ),
-  );
 
-  Devis devis = new Devis();
+
+  Facture facture = new Facture();
+
 
   Client client =  new Client('','Client','','');
   var uuid = Uuid();
@@ -132,20 +119,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
 
       }
 
-      else {
-        if(i==2)
-        {
-          scaffold.showSnackBar(
-            SnackBar(
-              content: const Text(' Date de validité est incorrecte'),
 
-            ),
-          );
-
-        }
-
-
-      }
 
 
     }
@@ -158,49 +132,51 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
 
   @override
   Widget build(BuildContext context) {
-    final provDevis = Provider.of<DevisProvider>(context);
-    final provTVA = Provider.of<TvaProvider>(context);
-
-    final provlistDevis = Provider.of<ListDevisProvider>(context);
-    final provlistClient = Provider.of<ListClientProvider>(context);
-    final provlistArticle = Provider.of<ListArticleProvider>(context);
 
 
-   /* if(provDevis.listArticle.isNotEmpty)
+
+    final provfacture = Provider.of<FactureProvider>(context);
+
+   final provlistFacture = Provider.of<ListFactureProvider>(context);
+
+
+
+
+    /* if(provDevis.listArticle.isNotEmpty)
       {
         provDevis.total= total(totalSansRemise(provDevis.listArticle, provTVA.tva), provDevis.typeremise, provDevis.poucentageRemise, provDevis.remise);
 
       }*/
 
-    if(provDevis.id=='')
-      {
-        provDevis.id = uuid.v1();
+    if(provfacture.id=='')
+    {
+      provfacture.id = uuid.v1();
 
 
-      }
-
-
-
+    }
 
 
 
 
 
-    if(provDevis.typeremise == 'Aucune remise'){
+
+
+
+    if(provfacture.typeremise == 'Aucune remise'){
 
       remise =  '0 D';
 
 
     }
     else
-    if(provDevis.typeremise == 'Remise sur total'){
+    if(provfacture.typeremise == 'Remise sur total'){
 
-      remise = provDevis.poucentageRemise.toString()+ ' %';
+      remise = provfacture.poucentageRemise.toString()+ ' %';
     }
     else
-    if(provDevis.typeremise == 'Montant fixe'){
+    if(provfacture.typeremise == 'Montant fixe'){
 
-      remise = provDevis.remise.toString()+ ' D';
+      remise = provfacture.remise.toString()+ ' D';
     }
 
 
@@ -221,61 +197,52 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
               ),
               onPressed: () {
 
-                print(provDevis.id);
+                print(provfacture.id);
 
 
-                if(provDevis.client.id!= '' && provDevis.listArticle.isNotEmpty && provDevis.validite.compareTo(provDevis.date) > 0)
+                if(provfacture.client.id!= '' && provfacture.listArticle.isNotEmpty )
                 {
-                  devis.id = provDevis.id;
-                  devis.code= provDevis.code;
-                  devis.date= provDevis.date;
-                  devis.listArticle=provDevis.listArticle;
-                  devis.client= provDevis.client;
-                  devis.typeremise=provDevis.typeremise;
-                  devis.poucentageRemise=provDevis.poucentageRemise;
-                  devis.remise=provDevis.remise;
-                  devis.total=provDevis.total;
-                  devis.validite=provDevis.validite;
-                  devis.signature=provDevis.signature;
-                  devis.signaturedate=provDevis.signaturedate;
+                  facture.id = provfacture.id;
+                  facture.code= provfacture.code;
+                  facture.date= provfacture.date;
+                  facture.listArticle=provfacture.listArticle;
+                  facture.client= provfacture.client;
+                  facture.typeremise=provfacture.typeremise;
+                  facture.poucentageRemise=provfacture.poucentageRemise;
+                  facture.remise=provfacture.remise;
+                  facture.total=provfacture.total;
+                  facture.signature=provfacture.signature;
+                  facture.signaturedate=provfacture.signaturedate;
 
 
 
 
-                  if(provlistDevis.existDevis(devis.id)!= -1)
+                  if(provlistFacture.existFacture(facture.id)!= -1)
                   {
-                    provlistDevis.updateItem(devis, provlistDevis.existDevis(devis.id));
+                    provlistFacture.updateItem(facture, provlistFacture.existFacture(facture.id));
                   }
                   else
                   {
-                    provlistDevis.addItem(devis);
+                    provlistFacture.addItem(facture);
                   }
 
-                  provDevis.initialDevisProvider();
+                  provfacture.initialFactureProvider();
                   Navigator.pop(context );
                 }
                 else{
 
-                  if(provDevis.client.id== ''){
+                  if(provfacture.client.id== ''){
                     _showToast(context, 0);
 
                   }
                   else{
 
-                    if(provDevis.listArticle.isEmpty){
+                    if(provfacture.listArticle.isEmpty){
                       _showToast(context, 1);
 
                     }
 
-                    else{
 
-                      if(provDevis.validite.compareTo(provDevis.date) < 0 || provDevis.validite.compareTo(provDevis.date) == 0){
-                        _showToast(context, 2);
-
-                      }
-
-
-                    }
 
 
                   }
@@ -309,7 +276,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                             children: [
                               numeroDevisText,
                               Text(
-                                provDevis.code.toString(),
+                                provfacture.code.toString(),
                                 style: TextStyle(
                                     fontSize: 17.0, fontWeight: FontWeight.bold),
                               ),
@@ -338,7 +305,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${provDevis.date.day}-${provDevis.date.month}-${provDevis.date.year}',
+                                '${provfacture.date.day}-${provfacture.date.month}-${provfacture.date.year}',
                                 style: TextStyle(
                                   fontSize: 17.0,
                                 ),
@@ -346,20 +313,20 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                               IconButton(
                                   onPressed: () async{
 
-                                     final DateTime? selected = await showDatePicker(
-                                       context: context,
-                                       // locale:  Locale("fr", "FR"),
-                                       initialDate: provDevis.date,
-                                       firstDate: DateTime(2010),
-                                       lastDate: DateTime(2025),
-                                     );
-                                     if (selected != null && selected != provDevis.date)
-                                     {
+                                    final DateTime? selected = await showDatePicker(
+                                      context: context,
+                                      // locale:  Locale("fr", "FR"),
+                                      initialDate: provfacture.date,
+                                      firstDate: DateTime(2010),
+                                      lastDate: DateTime(2025),
+                                    );
+                                    if (selected != null && selected != provfacture.date)
+                                    {
 
-                                       provDevis.date=selected;
-                                       provDevis.validite=provDevis.date.add(Duration(days: 10));
+                                      provfacture.date=selected;
 
-                                     }
+
+                                    }
 
 
 
@@ -375,55 +342,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        validite,
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0,right: 10.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                               /* provDevis.validite.compareTo(provDevis.date) < 0 ? validite :*/ Text('${provDevis.validite.day}-${provDevis.validite.month}-${provDevis.validite.year}'),
-                                IconButton(
-                                    onPressed: () async{
 
-                                      final DateTime? selected = await showDatePicker(
-                                        context: context,
-                                        // locale:  Locale("fr", "FR"),
-                                        initialDate: provDevis.validite,
-                                        firstDate: DateTime(2010),
-                                        lastDate: DateTime(2025),
-                                      );
-                                      if (selected != null && selected != provDevis.validite )
-                                      {
-
-                                        provDevis.validite=selected;
-
-                                      }
-
-
-
-                                    },
-                                    icon: Icon(
-                                      Icons.calendar_today,
-                                      color: Colors.deepPurpleAccent[700],
-                                    ))
-                              ]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.only(top: 4.0),
               child: Card(
@@ -437,7 +356,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            clientText(provDevis.client.nom),
+                            clientText(provfacture.client.nom),
                             IconButton(
                               iconSize: 20.0,
                               icon: const Icon(Icons.add),
@@ -446,7 +365,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Select_client()),
+                                          Select_client_facture()),
                                 );
 
                               },
@@ -484,23 +403,23 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Ajout_article_devis()),
+                                                Ajout_article_facture()),
                                       );
 
-                                      provDevis.setTotal();
+                                      provfacture.setTotal();
 
                                     },
                                   ),
                                 ]),
                             SizedBox(
-                              height: sizedboxWidh * provDevis.listArticle.length,
+                              height: sizedboxWidh * provfacture.listArticle.length,
                               child: Container(
                                 /*  decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10.0))
                   ),*/
                                 child: ListView.builder(
-                                  itemCount: provDevis.listArticle.length,
+                                  itemCount: provfacture.listArticle.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                       decoration: BoxDecoration(
@@ -509,22 +428,22 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                                       ),
                                       child: ListTile(
                                         title: Text(
-                                          provDevis.listArticle[index].keys.first.description,
+                                          provfacture.listArticle[index].keys.first.description,
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         ),
                                         // subtitle: Text(provDevis.listArticle[index].keys.first.id),
                                         trailing: Text(
-                                          '${provDevis.listArticle[index].values.first.toString()} * ${provDevis.listArticle[index].keys.first.prix.toStringAsFixed(3)}',
+                                          '${provfacture.listArticle[index].values.first.toString()} * ${provfacture.listArticle[index].keys.first.prix.toStringAsFixed(3)}',
                                           style: TextStyle(fontSize: 15.0),
                                         ),
                                         onTap:
                                             ()  async{
                                           final result = await Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) =>  ModifierArticleDevis(provDevis.listArticle[index].keys.first.id), ),
+                                            MaterialPageRoute(builder: (context) =>  ModifierArticleFacture(provfacture.listArticle[index].keys.first.id), ),
                                           );
 
-    provDevis.setTotal();
+                                          provfacture.setTotal();
 
                                         },
                                       ),
@@ -575,14 +494,14 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                             final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => RemisePage(),
+                                builder: (context) => RemisePageFacture(),
                               ),
 
                             );
                             setState(() {
-                              remise= provDevis.typeremise;
+                              remise= provfacture.typeremise;
                             });
-                            provDevis.setTotal();
+                            provfacture.setTotal();
                           },
                         ),
                         Row(
@@ -597,14 +516,14 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                                 ),
                               ),
                               Text(
-                                  '${provDevis.total.toStringAsFixed(3)} D' ,
+                                '${provfacture.total.toStringAsFixed(3)} D' ,
                                 style: TextStyle(
                                   fontSize: 17.0,
                                   color: Colors.black,
                                 ),
                               ),
                             ]),
-                       /* GestureDetector(
+                        /* GestureDetector(
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -636,7 +555,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                           },
                         ),*/
 
-                       /* Row(
+                        /* Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -669,24 +588,24 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                   minWidth: 400,
                   color: Colors.deepPurpleAccent[700],
                   onPressed: ()async{
-                    if(provDevis.signature.isEmpty){
+                    if(provfacture.signature.isEmpty){
 
 
                     }
 
                     final result = await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  SignaturePreviewPage(provDevis.signature)  ),
+                      MaterialPageRoute(builder: (context) =>  SignaturePreviewPageFacture(provfacture.signature)  ),
                     );
 
 
 
                   }, child: Text(
-                provDevis.signature.isEmpty ? 'Signature' : 'Signé le ${provDevis.signaturedate.day}-${provDevis.signaturedate.month}-${provDevis.signaturedate.year}',
+                provfacture.signature.isEmpty ? 'Signature' : 'Signé le ${provfacture.signaturedate.day}-${provfacture.signaturedate.month}-${provfacture.signaturedate.year}',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.0,
-                  fontFamily: 'DMSans'), )),
+                    color: Colors.white,
+                    fontSize: 14.0,
+                    fontFamily: 'DMSans'), )),
             ),
             SizedBox(height: 200.0,)
           ],

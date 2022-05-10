@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projet_fin_etude/devis/ajout_devis.dart';
-import 'package:projet_fin_etude/devis/apercu_devis.dart';
+
 import 'package:projet_fin_etude/models/devis.dart';
 import 'package:projet_fin_etude/providers/devis_provider.dart';
 import 'package:projet_fin_etude/providers/list_devis_provider.dart';
 import 'package:provider/src/provider.dart';
+
 
 class TabBarDevis extends StatelessWidget {
   const TabBarDevis({Key? key}) : super(key: key);
@@ -23,6 +24,9 @@ class TabBarDevisState extends StatefulWidget {
 }
 
 class _TabBarDevisStateState extends State<TabBarDevisState> {
+
+
+
 
   Devis devis = new Devis();
   @override
@@ -54,7 +58,9 @@ class _TabBarDevisStateState extends State<TabBarDevisState> {
         onPressed: () {
 
           print(provDevis.id);
-          if(provDevis.client.id!= '' || provDevis.listArticle.isNotEmpty)
+
+
+          if(provDevis.client.id!= '' && provDevis.listArticle.isNotEmpty && provDevis.validite.compareTo(provDevis.date) > 0)
           {
             devis.id = provDevis.id;
             devis.code= provDevis.code;
@@ -65,19 +71,7 @@ class _TabBarDevisStateState extends State<TabBarDevisState> {
             devis.poucentageRemise=provDevis.poucentageRemise;
             devis.remise=provDevis.remise;
             devis.total=provDevis.total;
-            print(devis.id);
-            print(devis.code);
-            print(devis.date);
-            print(devis.listArticle);
-            print(devis.client);
-            print(devis.typeremise);
-            print(devis.poucentageRemise);
-            print(devis.remise);
 
-            print(devis.total);
-
-
-            print(provlistDevis.existDevis(devis.id));
 
             if(provlistDevis.existDevis(devis.id)!= -1)
               {
@@ -89,17 +83,46 @@ class _TabBarDevisStateState extends State<TabBarDevisState> {
               }
 
             provDevis.initialDevisProvider();
+            Navigator.pop(context );
+          }
+          else{
+
+            if(provDevis.client.id== ''){
+              _showToast(context, 0);
+
+            }
+            else{
+
+              if(provDevis.listArticle.isEmpty){
+                _showToast(context, 1);
+
+              }
+
+              else{
+
+                if(provDevis.validite.compareTo(provDevis.date) < 0){
+                  _showToast(context, 2);
+
+                }
+
+
+              }
+
+
+            }
+
+
 
           }
 
-          Navigator.pop(context );
+
         })],
 
         ),
         body: TabBarView(
           children: [
             AjoutDevis(),
-            ApercuDevis()
+            //ApercuDevis()
 
           ],
         ),
@@ -107,38 +130,49 @@ class _TabBarDevisStateState extends State<TabBarDevisState> {
       ),
     );
   }
+
+  void _showToast(BuildContext context, int i) {
+    final scaffold = ScaffoldMessenger.of(context);
+
+    if(i==0)
+      {
+        scaffold.showSnackBar(
+          SnackBar(
+            content: const Text('Client est requis'),
+
+          ),
+        );
+
+      }
+    else {
+      if(i==1)
+      {
+        scaffold.showSnackBar(
+          SnackBar(
+            content: const Text('Article est requis'),
+
+          ),
+        );
+
+      }
+
+      else {
+        if(i==2)
+        {
+          scaffold.showSnackBar(
+            SnackBar(
+              content: const Text(' Date de validité est incorrecte'),
+
+            ),
+          );
+
+        }
+
+
+      }
+
+
+    }
+
+  }
 }
-/*
-appBar: AppBar(
-backgroundColor: Colors.deepPurpleAccent[700],
-title: Text('Devis'),
-centerTitle: true,
-actions: <Widget>[
-IconButton(
-icon: Icon(
-Icons.check,
-color: Colors.white,
-),
-onPressed: () {
-
-if(provDevis.client.id!= '' || provDevis.listArticle.isNotEmpty)
-{
-devis.id = provDevis.id;
-devis.code= provDevis.code;
-devis.date= provDevis.date;
-devis.listArticle=provDevis.listArticle;
-devis.client= provDevis.client;
-devis.typeremise=provDevis.typeremise;
-devis.poucentageRemise=provDevis.poucentageRemise;
-devis.remise=provDevis.remise;
-devis.tva=provDevis.tva;
-
-provlistDevis.addItem(devis);
-
-}
-
-Navigator.pop(context );
-},
-)
-],
-),*/

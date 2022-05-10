@@ -3,6 +3,7 @@ import 'package:projet_fin_etude/article/home_article.dart';
 
 import 'client/home_client.dart';
 import 'devis/home_devis.dart';
+import 'facture/home_facture.dart';
 
 
 
@@ -22,34 +23,42 @@ class _HomePageState extends State<HomePage> {
 
       title: Text('Factures', style: TextStyle(
           fontFamily: 'DMSans')),
-      icon: Icon(Icons.article),
+      icon: ImageIcon(
+      AssetImage("assets/invoice.png")
+      )
     ),
     BottomNavigationBarItem(
       title: Text('Devis', style: TextStyle(
           fontFamily: 'DMSans')),
-      icon: Icon(Icons.calculate),
+      icon: ImageIcon(
+          AssetImage("assets/calculator.png")
+      )
     ),
     BottomNavigationBarItem(
       title: Text('Clients',style: TextStyle(
           fontFamily: 'DMSans'),),
-      icon: Icon(Icons.account_circle),
+      icon: ImageIcon(
+          AssetImage("assets/customer.png")
+      )
     ),
     BottomNavigationBarItem(
       title: Text('Articles', style: TextStyle(
           fontFamily: 'DMSans')),
-      icon: Icon(Icons.add_business),
+      icon: ImageIcon(
+          AssetImage("assets/store.png")
+      )
     ),
   ];
 
 
-  Widget _currentWidget = HomeArticles();
+  Widget _currentWidget = Home_facture();
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       switch (index) {
         case 0:
-         // _currentWidget = Home_Factures();
+          _currentWidget = Home_facture();
 
           break;
         case 1:
@@ -70,6 +79,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
 
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 27,
         backgroundColor: Colors.black,
         items: _navigationBarItems,
         currentIndex: _selectedIndex,

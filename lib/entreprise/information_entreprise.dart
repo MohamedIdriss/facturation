@@ -16,6 +16,7 @@ InformationEntreprise(this.tabController);
 class _InformationEntrepriseState extends State<InformationEntreprise> {
   TextEditingController nomController = new TextEditingController();
   TextEditingController adresseController = new TextEditingController();
+  TextEditingController matriculefiscale = new TextEditingController();
   TextEditingController telelphoneController = new TextEditingController();
   TextEditingController faxController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -35,7 +36,7 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   Text(
                     'Informations relatives à l’entreprise',
@@ -59,7 +60,7 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                     controller: nomController,
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
+                      contentPadding: EdgeInsets.all(4.0),
 
                       enabledBorder: OutlineInputBorder(
                         borderSide:
@@ -75,12 +76,12 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                   /* validator: (String? value) {
+                    validator: (String? value) {
                       if (value == null || value.isEmpty) {
                         return 'Nom est requis';
                       }
                       return null;
-                    },*/
+                    },
                     onSaved: (String? value){
                       providerentreprise.setnom(value!) ;
                     },
@@ -98,7 +99,7 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                     controller: adresseController,
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
+                      contentPadding: EdgeInsets.all(4.0),
                       labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 14.0,
@@ -123,12 +124,12 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                   /* validator: (String? value) {
+                    validator: (String? value) {
                       if (value == null || value.isEmpty) {
                         return 'Adresse est requis';
                       }
                       return null;
-                    },*/
+                    },
                     onSaved: (String? value){
                       providerentreprise.setadresse(value!);
                     },
@@ -136,6 +137,57 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                   SizedBox(
                     height: 20,
                   ),
+
+
+                  Text("Matricule fiscale",
+                      style: TextStyle(
+                          fontFamily: 'DMSans', fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: matriculefiscale,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(4.0),
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14.0,
+                      ),
+
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                        BorderSide(color: Colors.grey.shade200, width: 2),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      floatingLabelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1.5),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                     validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Adresse est requis';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value){
+                      providerentreprise.matriculefiscale =  value!;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
                   Text("Téléphone",
                       style: TextStyle(
                           fontFamily: 'DMSans', fontWeight: FontWeight.bold)),
@@ -146,7 +198,7 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                     controller: telelphoneController,
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
+                      contentPadding: EdgeInsets.all(4.0),
                       labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 14.0,
@@ -173,12 +225,12 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                       ),
                     ),
                     keyboardType: TextInputType.number,
-                  /*  validator: (String? value) {
+                   validator: (String? value) {
                       if (value == null || value.isEmpty) {
                         return 'Téléphone est requis';
                       }
                       return null;
-                    },*/
+                    },
                     onSaved: (String? value){
                       providerentreprise.settel(int.parse(value!));
                     },
@@ -198,7 +250,7 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                     controller: faxController,
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
+                      contentPadding: EdgeInsets.all(4.0),
                       labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 14.0,
@@ -225,12 +277,12 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                       ),
                     ),
                     keyboardType: TextInputType.number,
-                  /*  validator: (String? value) {
+                    validator: (String? value) {
                       if (value == null || value.isEmpty) {
                         return 'Fax est requis';
                       }
                       return null;
-                    },*/
+                    },
                     onSaved: (String? value){
                       providerentreprise.setfax(value!);
                     },
@@ -250,6 +302,13 @@ class _InformationEntrepriseState extends State<InformationEntreprise> {
                         //getproject();
 
                         if (_formKey.currentState!.validate()) {
+
+                          providerentreprise.setnom(nomController.text);
+                          providerentreprise.settel(int.parse(telelphoneController.text));
+                          providerentreprise.matriculefiscale=matriculefiscale.text;
+                          providerentreprise.setadresse(adresseController.text);
+                          providerentreprise.setfax(faxController.text);
+
 
                           widget.tabController.animateTo(1);
                         /*  Navigator.push(

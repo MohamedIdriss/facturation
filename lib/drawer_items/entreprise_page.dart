@@ -45,11 +45,7 @@ class EntreprisePageState extends State<EntreprisePage> {
   }
 
   Entreprise entreprise = new Entreprise();
-  String nom='';
-  String adresse='';
-  int tel=0;
-  String fax='';
-  File? logo;
+
 bool test=false;
 
   @override
@@ -88,13 +84,13 @@ bool test=false;
                 proventreprise.setadresse(entreprise.adresse);
                 proventreprise.settel(entreprise.tel);
                 proventreprise.setfax(entreprise.fax);
+                proventreprise.matriculefiscale = entreprise.matriculefiscale;
 
+                if(proventreprise.logo != image){
+                  proventreprise.setlogo(image!);
 
+                }
 
-
-
-
-                proventreprise.setlogo(image!);
 
                 Navigator.pop(context );
 
@@ -102,7 +98,7 @@ bool test=false;
 
 
 
-              print(proventreprise.logo);
+
 
 
 
@@ -139,31 +135,38 @@ bool test=false;
             ),
             SizedBox(height: 30.0,),
 
-            Center(
-              child: MaterialButton(
-                  height: 45,
-                  minWidth: 150,
-                  color: Colors.purple[600],
-                  onPressed: () {
-                    pickImage(ImageSource.gallery);
-                  }, child: Text('Choisir une image',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.0,
-                  fontFamily: 'DMSans'), )),
-            ),
-            SizedBox(height: 10,),
-            Center(
-              child: MaterialButton(
-                  height: 45,
-                  minWidth: 150,
-                  color: Colors.purple[600],
-                  onPressed: () {
-                    pickImage(ImageSource.camera);
-                  }, child: Text('Prendre une photo',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.0,
-                  fontFamily: 'DMSans'), )),
-            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              Center(
+                child: MaterialButton(
+                    height: 45,
+                    minWidth: 150,
+                    color: Colors.purple[600],
+                    onPressed: () {
+                      pickImage(ImageSource.gallery);
+                    }, child: Text('Choisir une image',style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.0,
+                    fontFamily: 'DMSans'), )),
+              ),
+
+              Center(
+                child: MaterialButton(
+                    height: 45,
+                    minWidth: 150,
+                    color: Colors.purple[600],
+                    onPressed: () {
+                      pickImage(ImageSource.camera);
+                    }, child: Text('Prendre une photo',style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.0,
+                    fontFamily: 'DMSans'), )),
+              ),
+
+            ],),
+
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
               child: Container(child: TextFormField(
@@ -178,8 +181,8 @@ bool test=false;
                   if (value == null || value.isEmpty) {
                     return 'Nom est requis';
                   }
-                  else if (value.length>15) {
-                    return 'Your text is too long !';
+                  else if (value.length>20) {
+                    return 'Votre Nom est trop long !';
                   }
                   return null;
                 },
@@ -205,11 +208,40 @@ bool test=false;
                   if (value == null || value.isEmpty) {
                     return 'Adresse est requis';
                   }
+                  else if (value.length>25) {
+                    return 'Votre Adresse est trop long !';
+                  }
 
                   return null;
                 },
                 onSaved: (String? value){
                 entreprise.adresse =value!;
+
+                },
+
+
+
+              )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Container(child: TextFormField(
+                maxLengthEnforced: false,
+                initialValue: context.watch<InformationEntrepriseprovider>().matriculefiscale ,
+
+                decoration: const InputDecoration(
+
+                  hintText: "Matricule Fiscale",
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Matricule Fiscale est requis';
+                  }
+
+                  return null;
+                },
+                onSaved: (String? value){
+                  entreprise.matriculefiscale =value!;
 
                 },
 
@@ -268,7 +300,7 @@ bool test=false;
                 textAlign: TextAlign.start,
                 keyboardType: TextInputType.number,
 
-             /*   validator: (String? value) {
+                validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Fax est requis';
                   }
@@ -279,7 +311,7 @@ bool test=false;
                   }
 
                   return null;
-                },*/
+                },
                 onSaved: (String? value){
                   entreprise.fax = value!;
 

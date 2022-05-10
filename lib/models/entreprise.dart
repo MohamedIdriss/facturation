@@ -1,11 +1,19 @@
+import 'dart:io';
+
+
 class Entreprise{
   String _nom='' ;
   String _adresse='';
-  String _logo ='' ;
+  String _matriculefiscale = '';
+  File? _logo  ;
   int _tel=0;
   String _fax='';
 
+  String get matriculefiscale => _matriculefiscale;
 
+  set matriculefiscale(String value) {
+    _matriculefiscale = value;
+  }
 
 
   String get nom => _nom;
@@ -28,9 +36,9 @@ class Entreprise{
     _tel = value;
   }
 
-  String get logo => _logo;
+  File? get logo => _logo;
 
-  set logo(String value) {
+  set logo(File? value) {
     _logo = value;
   }
 

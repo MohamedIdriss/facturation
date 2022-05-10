@@ -21,23 +21,23 @@ import 'ajout_article_page_devis.dart';
 import 'modifier_article_page_devis.dart';
 
 
-class AjoutDevis extends StatelessWidget {
-  const AjoutDevis({Key? key}) : super(key: key);
+class DupliqueDevis extends StatelessWidget {
+  const DupliqueDevis({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Ajout_devis_state();
+    return Duplique_devis_state();
   }
 }
 
 
-class Ajout_devis_state extends StatefulWidget {
+class Duplique_devis_state extends StatefulWidget {
 
   @override
-  _Ajout_devis_stateState createState() => _Ajout_devis_stateState();
+  _Duplique_devis_stateState createState() => _Duplique_devis_stateState();
 }
 
-class _Ajout_devis_stateState extends State<Ajout_devis_state> {
+class _Duplique_devis_stateState extends State<Duplique_devis_state> {
   var numeroDevisText = RichText(
     text: TextSpan(
       style:  const TextStyle(
@@ -65,11 +65,11 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
         color: Colors.black,
       ),
       children: <TextSpan>[
-         TextSpan(text: 'Validité '),
-          TextSpan(
+        TextSpan(text: 'Validité '),
+        TextSpan(
             text: '*',
             style:
-                 TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+            TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
       ],
     ),
   );
@@ -166,18 +166,18 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
     final provlistArticle = Provider.of<ListArticleProvider>(context);
 
 
-   /* if(provDevis.listArticle.isNotEmpty)
+    /* if(provDevis.listArticle.isNotEmpty)
       {
         provDevis.total= total(totalSansRemise(provDevis.listArticle, provTVA.tva), provDevis.typeremise, provDevis.poucentageRemise, provDevis.remise);
 
       }*/
 
     if(provDevis.id=='')
-      {
-        provDevis.id = uuid.v1();
+    {
+      provDevis.id = uuid.v1();
 
 
-      }
+    }
 
 
 
@@ -346,20 +346,20 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                               IconButton(
                                   onPressed: () async{
 
-                                     final DateTime? selected = await showDatePicker(
-                                       context: context,
-                                       // locale:  Locale("fr", "FR"),
-                                       initialDate: provDevis.date,
-                                       firstDate: DateTime(2010),
-                                       lastDate: DateTime(2025),
-                                     );
-                                     if (selected != null && selected != provDevis.date)
-                                     {
+                                    final DateTime? selected = await showDatePicker(
+                                      context: context,
+                                      // locale:  Locale("fr", "FR"),
+                                      initialDate: provDevis.date,
+                                      firstDate: DateTime(2010),
+                                      lastDate: DateTime(2025),
+                                    );
+                                    if (selected != null && selected != provDevis.date)
+                                    {
 
-                                       provDevis.date=selected;
-                                       provDevis.validite=provDevis.date.add(Duration(days: 10));
+                                      provDevis.date=selected;
+                                      provDevis.validite=provDevis.date.add(Duration(days: 10));
 
-                                     }
+                                    }
 
 
 
@@ -391,7 +391,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                               /* provDevis.validite.compareTo(provDevis.date) < 0 ? validite :*/ Text('${provDevis.validite.day}-${provDevis.validite.month}-${provDevis.validite.year}'),
+                                /* provDevis.validite.compareTo(provDevis.date) < 0 ? validite :*/ Text('${provDevis.validite.day}-${provDevis.validite.month}-${provDevis.validite.year}'),
                                 IconButton(
                                     onPressed: () async{
 
@@ -524,7 +524,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                                             MaterialPageRoute(builder: (context) =>  ModifierArticleDevis(provDevis.listArticle[index].keys.first.id), ),
                                           );
 
-    provDevis.setTotal();
+                                          provDevis.setTotal();
 
                                         },
                                       ),
@@ -597,14 +597,14 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                                 ),
                               ),
                               Text(
-                                  '${provDevis.total.toStringAsFixed(3)} D' ,
+                                '${provDevis.total.toStringAsFixed(3)} D' ,
                                 style: TextStyle(
                                   fontSize: 17.0,
                                   color: Colors.black,
                                 ),
                               ),
                             ]),
-                       /* GestureDetector(
+                        /* GestureDetector(
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -636,7 +636,7 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                           },
                         ),*/
 
-                       /* Row(
+                        /* Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -684,9 +684,9 @@ class _Ajout_devis_stateState extends State<Ajout_devis_state> {
                   }, child: Text(
                 provDevis.signature.isEmpty ? 'Signature' : 'Signé le ${provDevis.signaturedate.day}-${provDevis.signaturedate.month}-${provDevis.signaturedate.year}',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.0,
-                  fontFamily: 'DMSans'), )),
+                    color: Colors.white,
+                    fontSize: 14.0,
+                    fontFamily: 'DMSans'), )),
             ),
             SizedBox(height: 200.0,)
           ],

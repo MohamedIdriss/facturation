@@ -4,10 +4,13 @@ import 'package:projet_fin_etude/connextion.dart';
 import 'package:projet_fin_etude/entreprise/take_logo.dart';
 import 'package:projet_fin_etude/home_page.dart';
 import 'package:projet_fin_etude/providers/devis_provider.dart';
+import 'package:projet_fin_etude/providers/facture_provider.dart';
 import 'package:projet_fin_etude/providers/information_entreprise_provider.dart';
+import 'package:projet_fin_etude/providers/information_paiment_provider.dart';
 import 'package:projet_fin_etude/providers/list_article_provider.dart';
 import 'package:projet_fin_etude/providers/list_client_provider.dart';
 import 'package:projet_fin_etude/providers/list_devis_provider.dart';
+import 'package:projet_fin_etude/providers/list_facture_provider.dart';
 import 'package:projet_fin_etude/providers/remise_provider.dart';
 import 'package:projet_fin_etude/providers/switch_provider.dart';
 import 'package:projet_fin_etude/providers/tva_provider.dart';
@@ -31,6 +34,9 @@ void main() {
       ChangeNotifierProvider(create: (_) => ListDevisProvider()),
       ChangeNotifierProvider(create: (_) => DevisProvider()),
       ChangeNotifierProvider(create: (_) => RemiseProvider()),
+      ChangeNotifierProvider(create: (_) => PaimentProvider()),
+      ChangeNotifierProvider(create: (_) => FactureProvider()),
+      ChangeNotifierProvider(create: (_) => ListFactureProvider()),
 
     ],
     child: MyApp(),
@@ -45,9 +51,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
+debugShowCheckedModeBanner: false,
       title: 'Flutter',
-      home: HomePage(),
+      home: HomeEntreprice(),
     );
   }
 }

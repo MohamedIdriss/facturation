@@ -2,9 +2,10 @@
     package="com.example.projet_fin_etude">
 
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
-
-   <application
+    <application
         android:label="projet_fin_etude"
         android:icon="@mipmap/ic_launcher">
 

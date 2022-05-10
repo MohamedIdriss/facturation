@@ -63,15 +63,15 @@ art.id = widget.id;
                       //content: const Text('AlertDialog description'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: (){
+                          onPressed: ()async{
 
-                            Navigator.pop(context);
+                             Navigator.pop(context);
 
                             Navigator.pop(context );
 
 
 
-                            provlistArticle.deleteItem(provlistArticle.existArticle(widget.id));
+                             provlistArticle.deleteItem(provlistArticle.existArticle(widget.id));
 
 
 
@@ -149,6 +149,8 @@ art.id = widget.id;
                       label: Text(
                         'Prix unitaire',
                         style: TextStyle(
+
+                          fontFamily: 'DMSans',
                           color: Colors.black,
                         ),
                       ),
@@ -174,7 +176,11 @@ art.id = widget.id;
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween
                       ,children:[
-                    Text('TVA'),
+                    Text('TVA', style: TextStyle(
+
+                      fontFamily: 'DMSans',
+                      color: Colors.black,
+                    ),),
                     Switch(
                       value: art.tva,
                       onChanged: (value) {
@@ -195,7 +201,10 @@ art.id = widget.id;
                     child: Container(child: TextFormField(
                       decoration: const InputDecoration(
 
-                        label: Text('Pourcentage TVA', style: TextStyle(color: Colors.black,
+                        label: Text('Pourcentage TVA', style: TextStyle(
+
+                          fontFamily: 'DMSans',
+                          color: Colors.black,
                         ),),
 
                         hintText: '0 %',

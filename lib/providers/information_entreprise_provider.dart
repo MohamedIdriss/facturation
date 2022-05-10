@@ -6,9 +6,20 @@ class InformationEntrepriseprovider extends ChangeNotifier{
 
   String _nom='' ;
   String _adresse='';
+  String _matriculefiscale = '';
   File? _logo  ;
   int _tel=0;
   String _fax='';
+
+
+
+  String get matriculefiscale => _matriculefiscale;
+
+  set matriculefiscale(String value) {
+    _matriculefiscale = value;
+    notifyListeners();
+
+  }
 
 
   String get fax => _fax;

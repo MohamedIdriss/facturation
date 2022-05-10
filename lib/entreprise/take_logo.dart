@@ -28,6 +28,8 @@ class _TakeLogoStateState extends State<TakeLogoState> {
 
   File? image;
 
+
+
   Future pickImage(ImageSource source) async {
 
     try{
@@ -75,13 +77,19 @@ class _TakeLogoStateState extends State<TakeLogoState> {
           side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
                     onPressed: () {
 
+                      if(image != null)
+                      {
+                        providerentreprise.setlogo(image!);
+                      }
+
+
+
+
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>  HomePage( )));
-                  if(image != null)
-                     {
-                       providerentreprise.setlogo(image!);
-                     }
+
 
 
 

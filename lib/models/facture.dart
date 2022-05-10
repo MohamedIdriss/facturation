@@ -5,7 +5,7 @@ import 'package:projet_fin_etude/models/article.dart';
 
 import 'client.dart';
 
-class Devis {
+class Facture {
   String _id='';
   int _code= DateTime.now().millisecondsSinceEpoch;
   DateTime _date=DateTime.now();
@@ -15,8 +15,6 @@ class Devis {
   double _poucentageRemise =0;
   double _remise=0;
   double _total=0;
-  DateTime _validite= DateTime.now();
-
   Uint8List _signature = Uint8List(0) ;
   DateTime _signaturedate = DateTime.now();
 
@@ -27,11 +25,7 @@ class Devis {
     _signature = value;
   }
 
-  DateTime get validite => _validite;
 
-  set validite(DateTime value) {
-    _validite = value;
-  }
 
   String get id => _id;
 
@@ -54,19 +48,19 @@ class Devis {
 
   double get total => _total;
 
-   set total(double value) {
+  set total(double value) {
     _total = value;
   }
 
   double get remise => _remise;
 
-   set remise(double value) {
+  set remise(double value) {
     _remise = value;
   }
 
   List<Map<Article,int>> get listArticle => _listArticle;
 
-   set listArticle(List<Map<Article,int>> value) {
+  set listArticle(List<Map<Article,int>> value) {
     _listArticle = value;
   }
 
@@ -78,13 +72,13 @@ class Devis {
 
   DateTime get date => _date;
 
-   set date(DateTime value) {
+  set date(DateTime value) {
     _date = value;
   }
 
   int get code => _code;
 
-   set code(int value) {
+  set code(int value) {
     _code = value;
   }
 

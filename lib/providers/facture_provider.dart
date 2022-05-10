@@ -8,7 +8,7 @@ import 'package:projet_fin_etude/models/article.dart';
 import 'package:projet_fin_etude/models/client.dart';
 
 
-class DevisProvider  extends ChangeNotifier{
+class FactureProvider  extends ChangeNotifier{
   String _id='';
 
   int _code= DateTime.now().millisecondsSinceEpoch;
@@ -19,10 +19,10 @@ class DevisProvider  extends ChangeNotifier{
   double _poucentageRemise =0;
   double _remise=0;
   double _total=0;
-  DateTime _validite= DateTime.now().add(Duration(days: 10));
 
-   Uint8List _signature = Uint8List(0) ;
-   DateTime _signaturedate = DateTime.now();
+
+  Uint8List _signature = Uint8List(0) ;
+  DateTime _signaturedate = DateTime.now();
 
 
   DateTime get signaturedate => _signaturedate;
@@ -39,12 +39,6 @@ class DevisProvider  extends ChangeNotifier{
     notifyListeners();
   }
 
-  DateTime get validite => _validite;
-
-  set validite(DateTime value) {
-    _validite = value;
-    notifyListeners();
-  }
 
 
 
@@ -69,10 +63,10 @@ class DevisProvider  extends ChangeNotifier{
 
   set id(String value) {
     _id = value;
-   // notifyListeners();
+    // notifyListeners();
   }
 
-  void initialDevisProvider(){
+  void initialFactureProvider(){
     _id='';
     _code=DateTime.now().millisecondsSinceEpoch;
     _date= DateTime.now();
@@ -82,9 +76,9 @@ class DevisProvider  extends ChangeNotifier{
     _poucentageRemise =0;
     _remise=0;
     _total=0;
-    _validite= DateTime.now().add(Duration(days: 10));
-     _signature = Uint8List(0) ;
-     _signaturedate = DateTime.now();
+
+    _signature = Uint8List(0) ;
+    _signaturedate = DateTime.now();
 
     notifyListeners();
   }
@@ -96,7 +90,7 @@ class DevisProvider  extends ChangeNotifier{
 
   double get total => _total;
 
-   set total(double value) {
+  set total(double value) {
     _total = value;
     notifyListeners();
   }
@@ -105,14 +99,14 @@ class DevisProvider  extends ChangeNotifier{
 
   double get remise => _remise;
 
-   set remise(double value) {
+  set remise(double value) {
     _remise = value;
     notifyListeners();
   }
 
   List<Map<Article,int>> get listArticle => _listArticle;
 
-   set listArticle(List<Map<Article,int>> value) {
+  set listArticle(List<Map<Article,int>> value) {
     _listArticle = value;
     notifyListeners();
   }
@@ -126,30 +120,30 @@ class DevisProvider  extends ChangeNotifier{
 
   DateTime get date => _date;
 
-   set date(DateTime value) {
+  set date(DateTime value) {
     _date = value;
     notifyListeners();
   }
 
   int get code => _code;
 
-   set code(int value) {
+  set code(int value) {
     _code = value;
     notifyListeners();
   }
 
-  int existArticleInDivis(String id){
+  int existArticleInFacture(String id){
 
-      for(int i=0;i<_listArticle.length;i++)
-        {
-          if(_listArticle[i].keys.first.id == id)
-            {
-              return i;
+    for(int i=0;i<_listArticle.length;i++)
+    {
+      if(_listArticle[i].keys.first.id == id)
+      {
+        return i;
 
-            }
+      }
 
-        }
-      return -1;
+    }
+    return -1;
 
 
   }
@@ -163,9 +157,9 @@ class DevisProvider  extends ChangeNotifier{
     notifyListeners();
 
   }
-  void deleteArticleFromDevis(int index){
-     _listArticle.removeAt(index);
-     notifyListeners();
+  void deleteArticleFromFacture(int index){
+    _listArticle.removeAt(index);
+    notifyListeners();
 
   }
 
